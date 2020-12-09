@@ -1,17 +1,16 @@
+## 使用说明
+根目录下 执行make
+
+
+## 目录结构说明
 build/                                  生成的动态链接库目录
-
 data_structure/                         数据结构算法目录
-
 include/                                头文件目录
-
 obj/                                    中间目标文件目录
 
 main.c                                  主程序源程序
-
 Makefile                                make 文件
-
 Makefile_item                           子文件 make 文件模板
-
 apps                                    可执行文件
 
 

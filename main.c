@@ -5,19 +5,30 @@
 /*  单元测试 */
 #if defined ENABLE_UNITTEST
 
+/*  测试 线性表函数  */
 #include "seq_list.h"
 void test_single_seq_list(void);
 
+/*  测试 单链表函数  */
+#include "link_list.h"
+void test_single_link_list(void);
 
-#endif
+/*  测试 循环单链表函数  */
+#include "cycle_link_list.h"
+void test_cycle_link_list(void);
+
+
+#endif      /*  ENABLE_UNITTEST  */
 
 int main(void)
 {
     DEBUG_LOG(LOG_INFO_LEVEL, "program start", "main");   
 
     #if defined ENABLE_UNITTEST
-
     test_single_seq_list();
+    test_single_link_list();
+    test_cycle_link_list();
+
     #endif
     
 
@@ -34,6 +45,17 @@ void test_single_seq_list(void)
     SeqList_test_02();
     SeqList_test_03();
 }
+
+void test_single_link_list(void)
+{
+    LinkList_test_01();
+}
+
+void test_cycle_link_list(void)
+{
+    CycleLinkList_test_01();
+}
+
 #endif
 
 /* 日志处理函数, 根据日志级别过滤输出  */

@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 /*
- *  单列表初始化
+ *  线性表初始化
  * */
 void SeqList_init(SeqList *list)
 {
@@ -16,7 +16,7 @@ void SeqList_init(SeqList *list)
 }
 
 /*
-**  单列表销毁
+**  线性表销毁
 ***/
 void SeqList_destroy_list(SeqList *list)
 {
@@ -32,7 +32,7 @@ void SeqList_destroy_list(SeqList *list)
 }
 
 /*
-**  清空单列表
+**  清空线性表
 ***/
 void SeqList_clear(SeqList *list)
 {
@@ -41,16 +41,16 @@ void SeqList_clear(SeqList *list)
 }
 
 /*
-**  判断单列表是否为空
+**  判断线性表是否为空
 ***/
-bool SeqList_Empty(const SeqList *list)
+bool SeqList_empty(const SeqList *list)
 {
     assert(list != NULL);
-    return list->length>0?true:false; 
+    return list->length == 0?true:false; 
 }
 
 /*
-**  查询单列表长度
+**  查询线性表长度
 ***/
 int SeqList_length(const SeqList *list)
 {
@@ -59,7 +59,7 @@ int SeqList_length(const SeqList *list)
 }
 
 /*
-** 查询单列表第 idx 个数据元素对象, idx 从1开始计数 
+** 查询线性表第 idx 个数据元素对象, idx 从1开始计数 
 ***/
 bool SeqList_get_elem(const SeqList *list, int idx, ElemType *e)
 {
@@ -74,7 +74,7 @@ bool SeqList_get_elem(const SeqList *list, int idx, ElemType *e)
 }
 
 /*
-**  查询单列表，数据元素e, 所在的下标。（下标从1开始计数）
+**  查询线性表，数据元素e, 所在的下标。（下标从1开始计数）
 ***/
 int SeqList_locate_elem(const SeqList *list, ElemType e, compare_func compare)
 {
@@ -96,7 +96,7 @@ int SeqList_locate_elem(const SeqList *list, ElemType e, compare_func compare)
 }
 
 /*
-** 查询单列表，数据元素 cur_e的前驱元素
+** 查询线性表，数据元素 cur_e的前驱元素
 ***/
 bool SeqList_prior_elem(const SeqList *list, ElemType cur_e, ElemType *pre_e)
 {
@@ -126,7 +126,7 @@ bool SeqList_prior_elem(const SeqList *list, ElemType cur_e, ElemType *pre_e)
 }
 
 /*
-** 查询单列表，数据元素 cur_e的后继元素
+** 查询线性表，数据元素 cur_e的后继元素
 ***/
 bool SeqList_next_elem(const SeqList *list, ElemType cur_e, ElemType *next_e)
 {
@@ -147,7 +147,7 @@ bool SeqList_next_elem(const SeqList *list, ElemType cur_e, ElemType *next_e)
 }
 
 /*
-** 单列表, 在第idx 位置插入元素, idx 从1开始计数
+** 线性表, 在第idx 位置插入元素, idx 从1开始计数
 ***/
 bool SeqList_insert(SeqList *list, int idx, ElemType e)
 {
@@ -172,7 +172,7 @@ bool SeqList_insert(SeqList *list, int idx, ElemType e)
         memcpy(base, list->elem, sizeof(ElemType)*list->list_size);
         // 释放原始数据缓冲区
         free(list->elem);    
-        // 单列表指向新分配的缓冲区
+        // 线性表指向新分配的缓冲区
         list->elem = base; 
         list->list_size += LIST_INCREMENT;
     }
@@ -196,7 +196,7 @@ bool SeqList_insert(SeqList *list, int idx, ElemType e)
 }
 
 /*
-** 单列表，删除第 idx 位置的元素  
+** 线性表，删除第 idx 位置的元素  
 ***/
 bool SeqList_delete(SeqList *list, int idx, ElemType *e)
 {
@@ -221,7 +221,7 @@ bool SeqList_delete(SeqList *list, int idx, ElemType *e)
 }
 
 /*
-** 单列表，使用 visit 函数, 访问每一个元素
+** 线性表，使用 visit 函数, 访问每一个元素
 ***/
 void SeqList_traverse(const SeqList *list, visit_func visit)
 {
@@ -232,6 +232,7 @@ void SeqList_traverse(const SeqList *list, visit_func visit)
     {
         visit(list->elem[i]);
     }
+    printf("\n");
 }
 
 
@@ -251,27 +252,24 @@ static void _visit_func(ElemType a)
 }
 
 /*
-** 测试, 单列表的基本功能
+** 测试, 线性表的基本功能
 ***/
 void SeqList_test_01(void)
 {
     int idx, i, len;
     ElemType e, prior_e, next_e;
     bool ret = false;
-    char log_buf[64] = {0};
     SeqList list;
 
     DEBUG_LOG(LOG_DEBUG_LEVEL, "func called start", __func__);
     SeqList_init(&list);
-    assert(!SeqList_Empty(&list));
+    assert(SeqList_empty(&list));
 
     for(i=0; i<10; ++i)
         SeqList_insert(&list, 1, i);
 
     len = SeqList_length(&list);
     assert(len == 10);  
-    sprintf(log_buf, "seq list len: %d", len);
-    DEBUG_LOG(LOG_DEBUG_LEVEL, log_buf, __func__);
     SeqList_traverse(&list, _visit_func);
 
     ret = SeqList_get_elem(&list, 1, &e);
@@ -293,18 +291,17 @@ void SeqList_test_01(void)
     assert(idx==1);
 
     ret = SeqList_delete(&list, 1, &e);
-    printf("ret=%d, e=%d\n", ret, e);
     assert(ret && e==9);
 
     SeqList_traverse(&list, _visit_func);    
  
     SeqList_destroy_list(&list);
-    assert(!SeqList_Empty(&list));
+    assert(SeqList_empty(&list));
     DEBUG_LOG(LOG_DEBUG_LEVEL, "func called done", __func__); 
 }
 
 /*
-** 测试, 单列表长度超出长度的基本功能
+** 测试, 线性表长度超出长度的基本功能
 ***/
 void SeqList_test_02(void)
 {
@@ -324,23 +321,21 @@ void SeqList_test_02(void)
 }
 
 /*
-** 测试, 单列表性能测试
+** 测试, 线性表性能测试
 ***/
 void SeqList_test_03(void)
 {
     SeqList list;
     int i;
-    char log_buf[32] = {0};
     DEBUG_LOG(LOG_DEBUG_LEVEL, "start called", __func__);
     SeqList_init(&list);
 
-    for(i=0; i<100000; ++i)
+    DEBUG_LOG(LOG_DEBUG_LEVEL, "insert 10000 elem", __func__);
+    for(i=0; i<10000; ++i)
     {
-        sprintf(log_buf, "handle %d\n", i);
-        DEBUG_LOG(LOG_DEBUG_LEVEL, log_buf, __func__);
         SeqList_insert(&list, i+1, i+1);
     }
-    SeqList_traverse(&list, _visit_func);
+    //SeqList_traverse(&list, _visit_func);
     SeqList_destroy_list(&list);
 
     DEBUG_LOG(LOG_DEBUG_LEVEL, "end called", __func__);
