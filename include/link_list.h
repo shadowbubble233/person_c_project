@@ -7,10 +7,8 @@
 #include "project_config.h"
 
 
-/*  线性链表, 数据项比较函数。 返回值 0, 比较成功 */
 typedef bool (*compare_func)(ElemType a, ElemType b);
 
-/*  线性链表, 数据项迭代函数 */
 typedef void (*visit_func)(ElemType e);
 
 typedef struct _node

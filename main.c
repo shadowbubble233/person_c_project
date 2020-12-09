@@ -22,7 +22,7 @@ void test_cycle_link_list(void);
 
 int main(void)
 {
-    DEBUG_LOG(LOG_INFO_LEVEL, "program start", "main");   
+    DEBUG_LOG(LOG_INFO_LEVEL, "program start", __func__);   
 
     #if defined ENABLE_UNITTEST
     test_single_seq_list();
@@ -32,7 +32,7 @@ int main(void)
     #endif
     
 
-    DEBUG_LOG(LOG_INFO_LEVEL, "program end", "main"); 
+    DEBUG_LOG(LOG_INFO_LEVEL, "program end", __func__); 
     return 0;
 }
 

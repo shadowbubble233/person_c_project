@@ -1,5 +1,5 @@
 # 编译选项
-CFLAGS=-Wall -O -pthread
+CFLAGS=-Wall -O -pthread -std=c99
 
 
 C_SOURCES=$(wildcard *.c)

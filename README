@@ -3,10 +3,46 @@
 
 
 ## 目录结构说明
-build/                                  生成的动态链接库目录
-data_structure/                         数据结构算法目录
 include/                                头文件目录
+build/                                  生成的动态链接库目录
 obj/                                    中间目标文件目录
+data_structure/                         数据结构算法目录
+    single_list/                             单链表算法目录
+        seq_list.c                              线性表数据结构实现
+        link_list.c                             单链表数据结构实现
+        cycle_link_list.c                       循环单链表数据结构实现
+        cycle_dlink_list.c                      循环双向链表数据结构实现
+        static_list.c                           静态链表实现
+        
+        book_question.c                         课本习题链表练习
+        net_question.c                          网络收集问题链表练习                
+
+    stack/
+
+    queue/
+
+    tree/
+
+    graph/
+
+    sort/
+
+modules/
+
+    net_module/
+
+    mem_module/
+        bitmap.c                            位图算法实现, 管理内存池
+        mymalloc.c                          包装malloc, free实现, 实现跟踪程序内存分配
+
+    process_module/
+
+    thread_module/
+
+    coroutine_module/
+
+    signal_module/
+     
 
 main.c                                  主程序源程序
 Makefile                                make 文件

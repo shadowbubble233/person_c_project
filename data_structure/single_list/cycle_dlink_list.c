@@ -1,40 +1,23 @@
-/*
- *  双向循环链表, 数据结构定义
- * */
-#ifndef DOUBLE_CYCLE_LINK_LIST_H
-#define DOUBLE_CYCLE_LINK_LIST_H
-
-#include "project_config.h"
-
-
-typedef bool (*compare_func)(ElemType a, ElemType b);
-
-typedef void (*visit_func)(ElemType e);
-
-typedef struct _cycle_dlink_node
-{
-    ElemType elem;                                  // 数据域
-    struct _cycle_dlink_node *next;                 // 后继元素指针域
-    struct _cycle_dlink_node *prev;                 // 前驱元素指针域
-}CycleDLinkNode;
-
-
-typedef struct
-{
-    CycleDLinkNode *data;                           // 头指针
-    CycleDLinkNode *last;                           // 尾指针
-    int length;                                     // 元素长度
-}CycleDLinkList;
+#include "cycle_dlink_list.h"
 
 /*
 ** 循环双向列表初始化
 ***/
-void CycleDLinkList_init(CycleDLinkList *list);
+void CycleDLinkList_init(CycleDLinkList *list)
+{
+    assert(list);
+    memset(list, 0x0, sizeof(CycleDLinkList));
+}
 
 /*
 ** 循环双向列表销毁
 ***/
-void CycleDLinkList_destroy_list(CycleDLinkList *list);
+void CycleDLinkList_destroy_list(CycleDLinkList *list)
+{
+    CycleDLinkNode *iter;
+
+    assert(list); 
+}
 
 /*
 ** 清空循环双向列表
@@ -96,5 +79,4 @@ void CycleDLinkList_test_01(void);
 
 #endif          /*  ENABLE_UNITTEST */
 
-#endif
 
