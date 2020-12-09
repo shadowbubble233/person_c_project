@@ -13,9 +13,13 @@ void test_single_seq_list(void);
 #include "link_list.h"
 void test_single_link_list(void);
 
-/*  测试 循环单链表函数  */
+/*  测试 循环单向单链表函数  */
 #include "cycle_link_list.h"
 void test_cycle_link_list(void);
+
+/*  测试 循环双向链表函数   */
+#include "cycle_dlink_list.h"
+void test_cycle_dlink_list(void);
 
 
 #endif      /*  ENABLE_UNITTEST  */
@@ -28,6 +32,8 @@ int main(void)
     test_single_seq_list();
     test_single_link_list();
     test_cycle_link_list();
+    test_cycle_dlink_list();
+
 
     #endif
     
@@ -56,6 +62,10 @@ void test_cycle_link_list(void)
     CycleLinkList_test_01();
 }
 
+void test_cycle_dlink_list(void)
+{
+    CycleDLinkList_test_01();
+}
 #endif
 
 /* 日志处理函数, 根据日志级别过滤输出  */

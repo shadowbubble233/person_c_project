@@ -10,7 +10,7 @@ data_structure/                         数据结构算法目录
     single_list/                             单链表算法目录
         seq_list.c                              线性表数据结构实现
         link_list.c                             单链表数据结构实现
-        cycle_link_list.c                       循环单链表数据结构实现
+        cycle_link_list.c                       循环单向单链表数据结构实现
         cycle_dlink_list.c                      循环双向链表数据结构实现
         static_list.c                           静态链表实现
         
