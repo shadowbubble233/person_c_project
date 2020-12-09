@@ -17,7 +17,7 @@ C_OBJS=$(patsubst %.c, %.o, $(C_SOURCES))
 
 C_BIN_OBJS=$(wildcard $(BASE_DIR)/$(BIN_DIR)/*.o)
 
-SUBDIRS=$(shell ls -l|grep ^d | awk '{if($$9 != "obj" && $$9 != "include" && $$9!="build") print $$9}')
+SUBDIRS=$(shell ls -l|grep ^d | awk '{if($$9 != "obj" && $$9 != "include" && $$9!="build" && $$9 != "log") print $$9}')
 
 export CC BASE_DIR INC_DIR BIN_DIR
 
