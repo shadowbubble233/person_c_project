@@ -9,6 +9,8 @@ CFLAGS=-Wall -O -pthread
 BASE_DIR=$(shell pwd)
 INC_DIR=include
 BIN_DIR=obj
+LOG_DIR=log
+BUILD_DIR=build
 
 C_SOURCES=$(wildcard *.c)
 C_OBJS=$(patsubst %.c, %.o, $(C_SOURCES))
@@ -37,6 +39,8 @@ $(C_OBJS):%.o:%.c
 # 检查 BIN_DIR 目录是否存在
 check_dir:
 	mkdir -p $(BIN_DIR)
+	mkdir -p $(LOG_DIR)
+	mkdir -p $(BUILD_DIR) 
 
 # 递归编译子目录
 $(SUBDIRS):NOP 
