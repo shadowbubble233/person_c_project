@@ -8,7 +8,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-
 #define STRCMP(a, op, b)    (strcmp(a, b) op 0)
 
 

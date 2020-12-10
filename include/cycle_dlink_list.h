@@ -22,7 +22,6 @@ typedef struct _cycle_dlink_node
 typedef struct
 {
     CycleDLinkNode *data;                           // 头指针
-    CycleDLinkNode *last;                           // 尾指针
     int length;                                     // 元素长度
 }CycleDLinkList;
 

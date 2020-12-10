@@ -157,10 +157,14 @@ bool CycleDLinkList_next_elem(const CycleDLinkList *list, ElemType cur_e, ElemTy
     {
         if(iter->elem == cur_e)
         {
-            *next_e = iter->next->elem;
-            ret = true;
+            if(iter->next)
+            {
+                *next_e = iter->next->elem;
+                ret = true;
+            }
             break;
         }
+        iter = iter->next;
     }while(iter != list->data);
 
     return ret;
@@ -205,7 +209,7 @@ bool CycleDLinkList_insert(CycleDLinkList *list, int idx, ElemType e)
         {
             item->next = iter;
             iter->prev->next = item;
-            item->prev = item->prev;
+            item->prev = iter->prev;
             iter->prev = item;
             ret = true;
             break;
@@ -213,7 +217,10 @@ bool CycleDLinkList_insert(CycleDLinkList *list, int idx, ElemType e)
         iter = iter->next; 
     }while(iter != list->data);
 
+    if(idx == 1)
+        list->data = item;
     list->length++;
+    printf("%s, ret=%d, idx=%d, e=%d\n", __func__, ret, idx, e);
     return ret;
 }
 
@@ -229,15 +236,19 @@ bool CycleDLinkList_delete(CycleDLinkList *list, int idx, ElemType *e)
     assert(list);
    
     if(idx < 1 || idx > list->length)
+        return ret;
  
     iter = list->data;
     do
     {
         if(i++ == idx)
         {
+            if(idx == 1)
+                list->data = iter->next;
             iter->prev->next = iter->next;
             iter->next->prev = iter->prev;
             item = iter;
+            *e = item->elem;
             free(item);
             ret = true;
             break;
@@ -301,38 +312,33 @@ void CycleDLinkList_test_01(void)
     len = CycleDLinkList_length(&list);
     assert(len == 10);
 
+    printf("aaa\n");
     ret = CycleDLinkList_get_elem(&list, 1, &e);
-    assert(ret && e == 0);
+    assert(ret && e == 9);
 
     ret = CycleDLinkList_get_elem(&list, 10, &e);
-    assert(ret && e == 9);
+    assert(ret && e == 0);
 
     ret = CycleDLinkList_get_elem(&list, 11, &e);
     assert(!ret);
 
-    printf("111\n");
     ret = CycleDLinkList_prior_elem(&list, 5, &prior_e);
-    assert(ret && prior_e == 4);
+    assert(ret && prior_e == 6);
 
-    printf("ccc\n");
     ret = CycleDLinkList_next_elem(&list, 5, &next_e);
-    assert(ret && next_e == 6);
+    assert(ret && next_e == 4);
 
-    printf("222\n");
-    idx = CycleDLinkList_locate_elem(&list, 9, _compare_func);
+    idx = CycleDLinkList_locate_elem(&list, 0, _compare_func);
     assert(idx == 10);
-
-    /*
+    
     ret = CycleDLinkList_delete(&list, 1, &e);
-    assert(ret && e == 0);
-    */
+    assert(ret && e == 9);
 
     CycleDLinkList_traverse(&list, _visit_func);
 
-    /*
     ret = CycleDLinkList_delete(&list, 9, &e);
-    assert(ret && e == 9);
-    */
+    assert(ret && e == 0);
+    
     CycleDLinkList_traverse(&list, _visit_func);
     CycleDLinkList_destroy_list(&list);
     assert(CycleDLinkList_empty(&list));
