@@ -10,6 +10,12 @@ void SeqList_init(SeqList *list)
     assert(list != NULL);
     
     list->elem = (ElemType*) malloc(sizeof(ElemType) * SEQ_LIST_INIT_SIZE);
+    if(!list->elem)
+    {
+        DEBUG_LOG(LOG_ERROR_LEVEL, "malloc error", __func__);
+        return;
+    }
+
     memset(list->elem, 0x0, sizeof(ElemType) * SEQ_LIST_INIT_SIZE);
     list->length = 0;
     list->list_size = SEQ_LIST_INIT_SIZE; 
@@ -163,11 +169,17 @@ bool SeqList_insert(SeqList *list, int idx, ElemType e)
     }
 
     // 检测 单链表是否需要扩容
-    if(list->length == list->list_size)
+    if(list->length >= list->list_size)
     {
         base = (ElemType*) malloc(sizeof(ElemType) * (list->list_size + LIST_INCREMENT)); 
+        if(!base)
+        {
+            DEBUG_LOG(LOG_ERROR_LEVEL, "malloc error", __func__);
+            return ret;
+        }
+
         memset(base, 0x0, sizeof(list->list_size + LIST_INCREMENT));  
-        
+ 
         // 单链表, 原始数据拷贝
         memcpy(base, list->elem, sizeof(ElemType)*list->list_size);
         // 释放原始数据缓冲区
@@ -177,6 +189,7 @@ bool SeqList_insert(SeqList *list, int idx, ElemType e)
         list->list_size += LIST_INCREMENT;
     }
 
+    // 执行插入操作
     for(i=list->length; i>=0; --i)
     {
         if(i==idx-1)
@@ -189,7 +202,20 @@ bool SeqList_insert(SeqList *list, int idx, ElemType e)
         // 元素后移
         list->elem[i] = list->elem[i-1];
     }
+
+    /*
+    指针实现版本
  
+    ElemType *iter, *stop;
+    *iter = list->elem[list->length];
+    *stop = list->elem[idx]; 
+
+    for( ; iter>= stop; --iter)
+        *iter = *(iter-1);
+    *iter= e;
+    list->length++; 
+    */
+
     if(ret)
         list->length++;   
     return ret; 
@@ -219,6 +245,9 @@ bool SeqList_delete(SeqList *list, int idx, ElemType *e)
     list->length--;   
     return true;
 }
+
+
+
 
 /*
 ** 线性表，使用 visit 函数, 访问每一个元素

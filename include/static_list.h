@@ -7,23 +7,32 @@
 
 #include "project_config.h"
 
-#define STATIC_LIST_INIT_SIZE  100         // 线性表存储空间-初始分配量
-#define LIST_INCREMENT      10          // 线性表存储空间-分配增量
+/*
+    -1 作为尾结点标志符
+  idx   | elem | cur | 
+    0     elem   -1
+ 
+ * */
 
 
-/*  静态链表, 数据项比较函数。 返回值 0, 表示比较成功  */
-typedef bool (*compare_func)(ElemType a, ElemType b);
-
-/*  静态链表, 数据项迭代函数  */
-typedef void (*visit_func)(ElemType e);
+#define STATIC_LIST_INIT_SIZE   100     // 线性表存储空间-初始分配量
+#define STATIC_LIST_INCREMENT   10      // 线性表存储空间-分配增量
 
 typedef struct
 {
-    ElemType *elem;                     // 存储空间, 基地址
+    ElemType elem;                      // 元素内容
+    int next;                           // 下一个元素的下标
+}StaticNode;
+
+
+typedef struct
+{
+    StaticNode *data;                   // 存储空间, 基地址
     int length;                         // 当前长度
-    int list_size;                      // 线性表-存储总长度
-   
+    int free_cur;                       // 空闲链表, 头索引
+    int list_size;                      // 静态链表-存储总长度
 }StaticList;
+
 
 
 /*
@@ -59,7 +68,7 @@ bool StaticList_get_elem(const StaticList *list, int idx, ElemType *e);
 /*
  *  查询静态链表，数据元素e, 所在的下标。（下标从1开始计数）
  * */
-int StaticList_locate_elem(const StaticList *list, ElemType e, compare_func compare); 
+int StaticList_locate_elem(const StaticList *list, ElemType e, bool (*compare_func)(ElemType a, ElemType b)); 
 
 /*
  *  查询静态链表，数据元素 cur_e的前驱元素
@@ -84,8 +93,12 @@ bool StaticList_delete(StaticList *list, int idx, ElemType *e);
 /*
  *  静态链表，使用 visit 函数, 访问每一个元素
  * */
-void StaticList_traverse(const StaticList *list, visit_func visit);
+void StaticList_traverse(const StaticList *list, void (*visit_func)(ElemType e));
 
+/*
+ *  静态链表, dump 数据结构
+ * */
+void StaticList_print(const StaticList *list);
 
 #if defined ENABLE_UNITTEST
 
