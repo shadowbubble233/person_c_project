@@ -340,7 +340,8 @@ void CycleDLinkList_test_01(void)
     CycleDLinkList_traverse(&list, _visit_func);
     CycleDLinkList_destroy_list(&list);
     assert(CycleDLinkList_empty(&list));
-    DEBUG_LOG(LOG_DEBUG_LEVEL, "func called done", __func__);    
+    DEBUG_LOG(LOG_DEBUG_LEVEL, "func called done", __func__);  
+    DEBUG_LOG(LOG_DEBUG_LEVEL, NULL, NULL);  
 }
 
 #endif          /*  ENABLE_UNITTEST */

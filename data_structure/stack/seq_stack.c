@@ -186,6 +186,7 @@ void SeqStack_test_01(void)
 
     SeqStack_destroy(&stack);
     DEBUG_LOG(LOG_DEBUG_LEVEL, "call done", __func__);
+    DEBUG_LOG(LOG_DEBUG_LEVEL, NULL, NULL);
 }
 
 #endif          /*  ENABLE_UNITTEST */

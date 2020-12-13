@@ -363,6 +363,7 @@ void LinkList_test_01(void)
     LinkList_destroy_list(&list);
     assert(LinkList_empty(&list));
     DEBUG_LOG(LOG_DEBUG_LEVEL, "func called done", __func__);
+    DEBUG_LOG(LOG_DEBUG_LEVEL, NULL, NULL);
 }
 
 #endif          /*  ENABLE_UNITTEST */

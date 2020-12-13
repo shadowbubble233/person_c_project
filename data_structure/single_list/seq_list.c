@@ -368,6 +368,7 @@ void SeqList_test_03(void)
     SeqList_destroy_list(&list);
 
     DEBUG_LOG(LOG_DEBUG_LEVEL, "end called", __func__);
+    DEBUG_LOG(LOG_DEBUG_LEVEL, NULL, NULL);
 }
 
 #endif          /*  ENABLE_UNITTEST */

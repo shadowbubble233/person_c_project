@@ -180,6 +180,7 @@ void LinkQueue_test_01(void)
 
     LinkQueue_destroy(&queue);
     DEBUG_LOG(LOG_DEBUG_LEVEL, "call done", __func__);
+    DEBUG_LOG(LOG_DEBUG_LEVEL, NULL, NULL);
 }
 
 #endif              /*  ENABLE_UNITTEST */

@@ -201,6 +201,7 @@ void ByteCycleQueue_test_01(void)
     ByteCycleQueue_destroy(&queue);
 
     DEBUG_LOG(LOG_DEBUG_LEVEL, "called done", __func__);
+    DEBUG_LOG(LOG_DEBUG_LEVEL, NULL, NULL);
 }
 
 #endif              /*  ENABLE_UNITTEST */

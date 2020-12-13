@@ -34,6 +34,11 @@ void test_link_queue(void);
 void test_byte_cycle_queue(void);
 
 
+/*  测试 排序算法   */
+#include "sort.h"
+void test_sort(void);
+
+
 #endif      /*  ENABLE_UNITTEST  */
 
 int main(void)
@@ -56,7 +61,9 @@ int main(void)
 
     // 堆
 
-    
+
+    // 排序算法
+    test_sort();
 
     #endif
     
@@ -106,6 +113,12 @@ void test_byte_cycle_queue(void)
     ByteCycleQueue_test_01();
 }
 
+
+void test_sort(void)
+{
+    Sort_test_01();
+}
+
 #endif
 
 /* 日志处理函数, 根据日志级别过滤输出  */
@@ -127,7 +140,12 @@ void debug_log(int level, const char *msg, const char *position)
 
     if (level >= LOG_HANDLE_LEVEL)
     {
-        printf("%s: %s, %s\n", LOG_MAPPING[level], msg, position);
+        if(msg && position)
+            printf("%s: %s, %s\n", LOG_MAPPING[level], msg, position);
+        else if(msg && !position)
+            printf("%s: %s\n", LOG_MAPPING[level], msg);
+        else if(!msg && !position)
+            printf("\n");
     }
 
 }

@@ -400,6 +400,7 @@ void CycleLinkList_test_01(void)
     CycleLinkList_destroy_list(&list);
     assert(CycleLinkList_empty(&list));
     DEBUG_LOG(LOG_DEBUG_LEVEL, "func called done", __func__);
+    DEBUG_LOG(LOG_DEBUG_LEVEL, NULL, NULL);
 }
 
 #endif          /*  ENABLE_UNITTEST */
