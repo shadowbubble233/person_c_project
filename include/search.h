@@ -8,7 +8,7 @@
 
 
 /*  二分查找, 下标从1开始计数 */
-int binary_search(ElemType *base, ElemType elem);
+int binary_search(ElemType *base, int len, ElemType elem);
 
 
 

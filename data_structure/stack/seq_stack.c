@@ -7,16 +7,17 @@ bool SeqStack_init(SeqStack *stack)
 {
     assert(stack);
 
-    stack.base = (ElemType *) malloc(sizeof(ElemType) * SEQ_STACK_INIT_SIZE);
-    if(!stack.base)
+    stack->base = (ElemType *) malloc(sizeof(ElemType) * SEQ_STACK_INIT_SIZE);
+    if(!stack->base)
     {
         DEBUG_LOG(LOG_ERROR_LEVEL, "malloc error", __func__);
-        return;
+        return false;
     }
 
-    memset(stack.base, 0x0, sizeof(ElemType) * SEQ_STACK_INIT_SIZE);
+    memset(stack->base, 0x0, sizeof(ElemType) * SEQ_STACK_INIT_SIZE);
     stack->top = stack->base;
     stack->stack_size = SEQ_STACK_INIT_SIZE;
+    return true;
 }
 
 /*
@@ -33,6 +34,7 @@ bool SeqStack_destroy(SeqStack *stack)
         stack->top = NULL;
         stack->stack_size = 0;
     }
+    return true;
 }
 
 /*
@@ -40,14 +42,15 @@ bool SeqStack_destroy(SeqStack *stack)
  * */
 bool SeqStack_clear(SeqStack *stack)
 {
-    ElemType *iter, e;
+    ElemType e;
 
     assert(stack);
 
     while(stack->top != stack->base)
     {
-        SeqStack_pop(stack, e);
+        SeqStack_pop(stack, &e);
     }
+    return true;
 }
 
 /*
@@ -84,8 +87,7 @@ bool SeqStack_get_top(const SeqStack *stack, ElemType *e)
  * */
 bool SeqStack_push(SeqStack *stack, ElemType e)
 {
-    bool ret = false;
-    ElemType *iterm = NULL;
+    ElemType *item = NULL;
 
     assert(stack);
 
@@ -94,8 +96,8 @@ bool SeqStack_push(SeqStack *stack, ElemType e)
         item = (ElemType*) malloc(sizeof(ElemType) * (stack->stack_size + SEQ_STACK_INCREMENT));
         if(!item)
         {
-            DEBUG_LOG(LOG_ERROR_LEVEL, "malloc error", __func__)
-            return ret;
+            DEBUG_LOG(LOG_ERROR_LEVEL, "malloc error", __func__);
+            return false;
         }
         memset(item, 0x0, sizeof(ElemType) * (stack->stack_size + SEQ_STACK_INCREMENT));
         // 拷贝原始栈的数据
@@ -131,21 +133,21 @@ bool SeqStack_traverse(const SeqStack *stack, bool(*visit_func)(ElemType e))
     ElemType *iter;
 
     assert(stack);
-    if(!visit)
+    if(!visit_func)
         return false;
 
     iter = stack->base;
     while(iter != stack->top)
     {
-        visit_func(*iter);
-        iter++;
+        visit_func(*iter++);
     }
+    printf("\n");
     return true;
 }
 
 #if defined ENABLE_UNITTEST
 
-bool _visit_func(ElemType e)
+static bool _visit_func(ElemType e)
 {
     printf("%d ", e);
     return true;
@@ -156,11 +158,13 @@ void SeqStack_test_01(void)
     int i;
     ElemType e;
     SeqStack stack;
+
+    DEBUG_LOG(LOG_DEBUG_LEVEL, "call start", __func__);
     SeqStack_init(&stack);
 
     assert(!SeqStack_length(&stack));
 
-    for (i=1, i<=10; ++i)
+    for (i=1; i<=10; ++i)
     {
         SeqStack_push(&stack, i);
     }
@@ -175,10 +179,13 @@ void SeqStack_test_01(void)
     for(i=1; i<=10; ++i)
     {
         SeqStack_pop(&stack, &e);
+        printf("%d ", e);
     }
+    printf("\n");
     assert(!SeqStack_length(&stack));
 
     SeqStack_destroy(&stack);
+    DEBUG_LOG(LOG_DEBUG_LEVEL, "call done", __func__);
 }
 
 #endif          /*  ENABLE_UNITTEST */

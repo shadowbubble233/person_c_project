@@ -6,15 +6,15 @@
 
 #include "project_config.h"
 
-#define SEQ_STACK_INIT_SIZE     100;            // 线性栈存储空间初始分量
-#define SEQ_STACK_INCREMENT      10;             // 线性栈存储空间分配增量
+#define SEQ_STACK_INIT_SIZE     100            // 线性栈存储空间初始分量
+#define SEQ_STACK_INCREMENT      10            // 线性栈存储空间分配增量
 
 
 typedef struct
 {
     ElemType *base;                             // 栈底指针
     ElemType *top;                              // 栈顶指针
-    int stack_size;                              // 当前已分配的存储空间
+    int stack_size;                             // 当前已分配的存储空间
 }SeqStack;
 
 

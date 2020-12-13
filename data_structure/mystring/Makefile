@@ -11,11 +11,11 @@ build_module: $(SUBDIRS) $(C_OBJS)
 
 
 $(C_OBJS):%.o:%.c
-    $(CC) $(CFLAGS) -c $^ -o $(BASE_DIR)/$(BIN_DIR)/$@ -I $(BASE_DIR)/$(INC_DIR) 
+	$(CC) $(CFLAGS) -c $^ -o $(BASE_DIR)/$(BIN_DIR)/$@ -I $(BASE_DIR)/$(INC_DIR) 
 
 
 $(SUBDIRS): NOP
-    make -C $@
+	make -C $@
 
 NOP:
-    
+	

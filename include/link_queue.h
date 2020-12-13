@@ -1,6 +1,8 @@
 #ifndef LINK_QUEUE_H
 #define LINK_QUEUE_H
 
+#include "project_config.h"
+
 typedef struct _QNode
 {
     ElemType elem;

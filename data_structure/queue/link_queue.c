@@ -10,7 +10,7 @@ bool LinkQueue_init(LinkQueue *queue)
     assert(queue);
 
      item = (LinkQNode*)malloc(sizeof(LinkQNode));
-    if(!queue->front)
+    if(!item)
     {
         DEBUG_LOG(LOG_ERROR_LEVEL, "malloc error", __func__);
         return false;
@@ -49,6 +49,7 @@ bool LinkQueue_clear(LinkQueue *queue)
 {
     LinkQueue_destroy(queue);
     LinkQueue_init(queue);
+    return true;
 }
 
 /*
@@ -91,7 +92,7 @@ bool LinkQueue_get_head(LinkQueue *queue, ElemType *e)
 bool LinkQueue_en_queue(LinkQueue *queue, ElemType e)
 {
     bool ret = false;
-    ElemType *item;
+    LinkQNode *item;
 
     assert(queue);
     item = (LinkQNode*) malloc(sizeof(LinkQNode));
@@ -158,6 +159,7 @@ void LinkQueue_test_01(void)
     ElemType e;
     LinkQueue queue;
 
+    DEBUG_LOG(LOG_DEBUG_LEVEL, "call start", __func__);
     LinkQueue_init(&queue);
     assert(!LinkQueue_length(&queue));
 
@@ -168,7 +170,7 @@ void LinkQueue_test_01(void)
 
     assert(LinkQueue_length(&queue));
 
-    for(i=10; i>0; --i)
+    for(i=1; i<-10; ++i)
     {
         assert(LinkQueue_de_queue(&queue, &e));
         assert(e == i);
@@ -177,6 +179,7 @@ void LinkQueue_test_01(void)
     assert(LinkQueue_length(&queue));
 
     LinkQueue_destroy(&queue);
+    DEBUG_LOG(LOG_DEBUG_LEVEL, "call done", __func__);
 }
 
 #endif              /*  ENABLE_UNITTEST */

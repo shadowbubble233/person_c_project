@@ -6,7 +6,7 @@ bool ByteCycleQueue_init(ByteCycleQueue *queue, int buf_size)
     assert(queue);
 
     if(buf_size <= 0)
-        buf_size = DEFAULT_CYCLE_QUEUE_SIZE
+        buf_size = DEFAULT_CYCLE_QUEUE_SIZE;
 
     queue->base = (char*) malloc(sizeof(char) * buf_size);
     if(!queue->base)
@@ -108,7 +108,7 @@ bool ByteCycleQueue_en_queue(ByteCycleQueue *queue, char *in_buf, int in_len)
     else
     {
         memcpy(queue->base + queue->write_idx, in_buf, queue->buf_size - queue->write_idx);
-        memcpy(queue->base, in_buf + (quque->buf_size - queue->write_idx), in_len - queue->buf_size + queue->write_idx);
+        memcpy(queue->base, in_buf + (queue->buf_size - queue->write_idx), in_len - queue->buf_size + queue->write_idx);
     }
 
     queue->length += in_len;
@@ -141,7 +141,7 @@ bool ByteCycleQueue_de_queue(ByteCycleQueue *queue, char *out_buf, int out_len)
     return true;
 }
 
-void ByteCycleQueue_traverse(const ByteCycleQueue *queue, void (*visit_func)(ElemType e))
+void ByteCycleQueue_traverse(const ByteCycleQueue *queue, void (*visit_func)(char* e))
 {
     char *iter;
     assert(queue);
@@ -151,16 +151,16 @@ void ByteCycleQueue_traverse(const ByteCycleQueue *queue, void (*visit_func)(Ele
 
     // 访问第一部分数据
     iter = queue->base + queue->read_idx;
-    while(iter < queue_base + queue->buf_size)
+    while(iter < queue->base + queue->buf_size)
     {
-        visit_func(*iter++);
+        visit_func(iter++);
     }
 
     // 访问第二部分数据
     iter = queue->base;
     while(iter < queue->base + queue->write_idx)
     {
-        visit_func(*iter++);
+        visit_func(iter++);
     }
     printf("\n");
 }
@@ -168,7 +168,7 @@ void ByteCycleQueue_traverse(const ByteCycleQueue *queue, void (*visit_func)(Ele
 
 #if defined ENABLE_UNITTEST
 
-void _visit_func(char *e)
+static void _visit_func(char *e)
 {
     printf("%c", *e);
 }
@@ -180,21 +180,27 @@ void ByteCycleQueue_test_01(void)
     char out_buf[256];
     memset(in_buf, 0x0, 256);
     memset(out_buf, 0x0, 256);
+
+    DEBUG_LOG(LOG_DEBUG_LEVEL, "called start", __func__);
     ByteCycleQueue_init(&queue, 0);
 
-    strcpy(in_buf, "abcdefg", 7);
+    strcpy(in_buf, "abcdefg") ;
     ByteCycleQueue_en_queue(&queue, in_buf, strlen(in_buf));
 
     ByteCycleQueue_traverse(&queue, _visit_func);
 
     ByteCycleQueue_get_head(&queue, out_buf, 7);
-    assert(strcmp(out_buf, in_buf));
+    assert(!strcmp(out_buf, in_buf));
 
-    memset(&queue, 0x0, sizeof(256));
+    memset(&out_buf, 0x0, sizeof(256));
     ByteCycleQueue_de_queue(&queue, out_buf, 7);
-    assert(strcmp(out_buf, in_buf));
+    assert(!strcmp(out_buf, in_buf));
+
+    DEBUG_LOG(LOG_DEBUG_LEVEL, out_buf, __func__);
 
     ByteCycleQueue_destroy(&queue);
+
+    DEBUG_LOG(LOG_DEBUG_LEVEL, "called done", __func__);
 }
 
 #endif              /*  ENABLE_UNITTEST */

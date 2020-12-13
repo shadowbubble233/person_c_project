@@ -21,6 +21,18 @@ void test_cycle_link_list(void);
 #include "cycle_dlink_list.h"
 void test_cycle_dlink_list(void);
 
+/*  测试 顺序栈函数 */
+#include "seq_stack.h"
+void test_seq_stack(void);
+
+/*  测试 链式队列函数   */
+#include "link_queue.h"
+void test_link_queue(void);
+
+/*  测试 字节循环缓冲区*/
+#include "byte_cycle_queue.h"
+void test_byte_cycle_queue(void);
+
 
 #endif      /*  ENABLE_UNITTEST  */
 
@@ -29,11 +41,22 @@ int main(void)
     DEBUG_LOG(LOG_INFO_LEVEL, "program start", __func__);   
 
     #if defined ENABLE_UNITTEST
+    // 单链表结构
     test_single_seq_list();
     test_single_link_list();
     test_cycle_link_list();
     test_cycle_dlink_list();
 
+    // 栈
+    test_seq_stack(); 
+
+    // 队列
+    test_link_queue(); 
+    test_byte_cycle_queue();
+
+    // 堆
+
+    
 
     #endif
     
@@ -66,6 +89,23 @@ void test_cycle_dlink_list(void)
 {
     CycleDLinkList_test_01();
 }
+
+void test_seq_stack(void)
+{
+    SeqStack_test_01();
+}
+
+void test_link_queue(void)
+{
+    LinkQueue_test_01();
+}
+
+
+void test_byte_cycle_queue(void)
+{
+    ByteCycleQueue_test_01();
+}
+
 #endif
 
 /* 日志处理函数, 根据日志级别过滤输出  */

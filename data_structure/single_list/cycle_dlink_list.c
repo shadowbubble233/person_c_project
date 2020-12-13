@@ -220,7 +220,6 @@ bool CycleDLinkList_insert(CycleDLinkList *list, int idx, ElemType e)
     if(idx == 1)
         list->data = item;
     list->length++;
-    printf("%s, ret=%d, idx=%d, e=%d\n", __func__, ret, idx, e);
     return ret;
 }
 
@@ -312,7 +311,6 @@ void CycleDLinkList_test_01(void)
     len = CycleDLinkList_length(&list);
     assert(len == 10);
 
-    printf("aaa\n");
     ret = CycleDLinkList_get_elem(&list, 1, &e);
     assert(ret && e == 9);
 

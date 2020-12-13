@@ -6,7 +6,7 @@
 void StaticList_init(StaticList *list)
 { 
     int i; 
-    StaticNode *head, *iter; 
+    StaticNode *head; 
     assert(list);
      
     list->data = (StaticNode*)malloc(sizeof(StaticNode) * STATIC_LIST_INIT_SIZE);
@@ -58,7 +58,7 @@ void StaticList_destroy_list(StaticList *list)
 void StaticList_clear(StaticList *list)
 {
     int i;
-    StaticNode *head, *iter;
+    StaticNode *head;
 
     assert(list);
 
