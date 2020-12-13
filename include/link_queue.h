@@ -1,10 +1,10 @@
 #ifndef LINK_QUEUE_H
 #define LINK_QUEUE_H
 
-typedef struct QNode
+typedef struct _QNode
 {
     ElemType elem;
-    struct QNode *next;
+    struct _QNode *next;
 }LinkQNode, *LinkQueuePtr;
 
 
@@ -12,6 +12,7 @@ typedef struct
 {
     LinkQueuePtr front;                 // 队头指针
     LinkQueuePtr rear;                  // 队尾指针
+    int length;                             // 队列长度
 } LinkQueue;
 
 
@@ -43,7 +44,7 @@ int LinkQueue_length(LinkQueue *queue);
 /*
  *  链式队列, 返回队头元素
  * */
-bool LinkQueue_get_head(LinkQueue *queue);
+bool LinkQueue_get_head(LinkQueue *queue, ElemType *e);
 
 /*
  *  链式队列， 入队操作 (队尾插入新元素)
@@ -58,7 +59,15 @@ bool LinkQueue_de_queue(LinkQueue *queue, ElemType *e);
 /*
  *  链式队列, 遍历操作
  * */
-void LinkQueue_traverse(const LinkQueue *queue);
+void LinkQueue_traverse(const LinkQueue *queue, void (*visit_func)(ElemType e));
+
+
+#if defined ENABLE_UNITTEST
+
+void LinkQueue_test_01(void);
+
+#endif              /*  ENABLE_UNITTEST */
+
 
 #endif
 

@@ -7,14 +7,14 @@
 #include "project_config.h"
 
 #define SEQ_STACK_INIT_SIZE     100;            // 线性栈存储空间初始分量
-#define SEQ_STACK_ICREMENT      10;             // 线性栈存储空间分配增量
+#define SEQ_STACK_INCREMENT      10;             // 线性栈存储空间分配增量
 
 
 typedef struct
 {
     ElemType *base;                             // 栈底指针
     ElemType *top;                              // 栈顶指针
-    int stacksize;                              // 当前已分配的存储空间
+    int stack_size;                              // 当前已分配的存储空间
 }SeqStack;
 
 
@@ -46,7 +46,7 @@ int SeqStack_length(const SeqStack *stack);
 /*
  *  查询栈顶项
  * */
-bool SeqStack_get_top(const SeqStack *stack);
+bool SeqStack_get_top(const SeqStack *stack, ElemType *e);
 
 /*
  *  入栈操作
@@ -61,7 +61,15 @@ bool SeqStack_pop(SeqStack *stack, ElemType *e);
 /*
  *  遍历栈操作
  * */
-bool SeqStack_traverse(const SeqStack *stack, bool(*visit)(ElemType e));
+bool SeqStack_traverse(const SeqStack *stack, bool(*visit_func)(ElemType e));
+
+
+#if defined ENABLE_UNITTEST
+
+void SeqStack_test_01(void);
+
+#endif          /*  ENABLE_UNITTEST */
+
 
 #endif
 
