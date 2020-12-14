@@ -29,7 +29,7 @@ void insert_sort(void *base, size_t len, size_t size, sort_compare_func compare_
 void xier_sort(void *base, size_t len, size_t size, sort_compare_func compare_func);
 
 /*  归并排序    */
-void merge_sort(void *base, size_t len, size_t size, sort_compare_func compare_func);
+void merger_sort(void *base, size_t len, size_t size, sort_compare_func compare_func);
 
 /*  堆排序    */
 void heap_sort(void *base, size_t len, size_t size, sort_compare_func compare_func);
